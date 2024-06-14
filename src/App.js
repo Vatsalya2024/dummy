@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import AddMemberForm from './Components/AddMemberForm/AddMemberForm';
+import AddUserForm from './Components/AddUserForm/AddUserForm';
 
-function App() {
+const App = () => {
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [userId, setUserId] = useState(null);
+
+ 
+  const setUserRole = (isAdmin) => {
+    setIsAdmin(isAdmin);
+  };
+
+
+  const setUserIdHandler = (userId) => {
+    setUserId(userId);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+    
+      {!userId ? (
+        <AddUserForm setUserRole={setUserRole} setUserId={setUserIdHandler} />
+      ) : isAdmin ? (
+        <AddMemberForm userId={userId} />
+      ) : (
+        <p>User added successfully. Not an admin, so cannot add member.</p>
+      )}
     </div>
   );
-}
+};
 
 export default App;
